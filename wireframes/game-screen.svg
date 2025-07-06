@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+    <!-- 배경 - 그라데이션 적용 -->
+    <defs>
+        <linearGradient id="backgroundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#1a1a2e"/>
+            <stop offset="100%" style="stop-color:#16213e"/>
+        </linearGradient>
+        <!-- 글로우 효과 -->
+        <filter id="glow">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    
+    <!-- 배경 -->
+    <rect x="0" y="0" width="800" height="600" fill="url(#backgroundGrad)"/>
+    
+    <!-- 게임 영역 - 테두리 효과 추가 -->
+    <rect x="50" y="50" width="700" height="500" fill="rgba(51,51,51,0.3)" 
+          stroke="#6c5ce7" stroke-width="2" rx="5"/>
+    
+    <!-- 상단 UI - 현대적 디자인 -->
+    <g transform="translate(60,20)">
+        <!-- 스테이지 정보 -->
+        <rect x="-10" y="0" width="100" height="30" rx="15" fill="#6c5ce7" filter="url(#glow)"/>
+        <text x="40" y="20" fill="white" font-size="16" text-anchor="middle" font-family="Arial">Stage 1</text>
+        
+        <!-- 시간 -->
+        <rect x="140" y="0" width="100" height="30" rx="15" fill="#e84393" filter="url(#glow)"/>
+        <text x="190" y="20" fill="white" font-size="16" text-anchor="middle" font-family="Arial">00:60</text>
+        
+        <!-- 점수 -->
+        <rect x="290" y="0" width="120" height="30" rx="15" fill="#00b894" filter="url(#glow)"/>
+        <text x="350" y="20" fill="white" font-size="16" text-anchor="middle" font-family="Arial">Score: 0</text>
+    </g>
+    
+    <!-- 플레이어 체력바 - 현대적 디자인 -->
+    <g transform="translate(60,50)">
+        <rect x="0" y="0" width="200" height="20" rx="10" fill="#2d3436"/>
+        <rect x="0" y="0" width="150" height="20" rx="10" fill="#00b894">
+            <animate attributeName="width" values="150;145;150" dur="2s" repeatCount="indefinite"/>
+        </rect>
+        <text x="100" y="15" fill="white" font-size="12" text-anchor="middle" font-family="Arial">Player HP</text>
+    </g>
+    
+    <!-- 보스 체력바 - 현대적 디자인 -->
+    <g transform="translate(540,50)">
+        <rect x="0" y="0" width="200" height="20" rx="10" fill="#2d3436"/>
+        <rect x="0" y="0" width="120" height="20" rx="10" fill="#e84393">
+            <animate attributeName="width" values="120;115;120" dur="2s" repeatCount="indefinite"/>
+        </rect>
+        <text x="100" y="15" fill="white" font-size="12" text-anchor="middle" font-family="Arial">Boss HP</text>
+    </g>
+    
+    <!-- 플레이어 캐릭터 - 더 세련된 디자인 -->
+    <g transform="translate(375,450)">
+        <path d="M0,0 L50,0 L25,-40 Z" fill="#00b894" filter="url(#glow)">
+            <animate attributeName="opacity" values="0.8;1;0.8" dur="1.5s" repeatCount="indefinite"/>
+        </path>
+    </g>
+    
+    <!-- 보스 캐릭터 - 드래곤 실루엣 -->
+    <g transform="translate(350,100)">
+        <path d="M50,0 C80,0 100,20 100,50 C100,80 80,100 50,100 C20,100 0,80 0,50 C0,20 20,0 50,0" 
+              fill="#e84393" filter="url(#glow)">
+            <animate attributeName="d" 
+                     values="M50,0 C80,0 100,20 100,50 C100,80 80,100 50,100 C20,100 0,80 0,50 C0,20 20,0 50,0;
+                             M50,5 C80,5 95,25 95,55 C95,85 80,95 50,95 C20,95 5,85 5,55 C5,25 20,5 50,5;
+                             M50,0 C80,0 100,20 100,50 C100,80 80,100 50,100 C20,100 0,80 0,50 C0,20 20,0 50,0" 
+                     dur="2s" repeatCount="indefinite"/>
+        </path>
+    </g>
+    
+    <!-- 보급품 아이콘 - 현대적 디자인 -->
+    <g transform="translate(700,100)">
+        <!-- 연사 아이템 -->
+        <circle cx="20" cy="20" r="15" fill="#0984e3" filter="url(#glow)">
+            <animate attributeName="r" values="15;14;15" dur="1s" repeatCount="indefinite"/>
+        </circle>
+        <text x="20" y="25" fill="white" font-size="14" text-anchor="middle" font-family="Arial">2x</text>
+        
+        <!-- 레이저 아이템 -->
+        <circle cx="20" cy="60" r="15" fill="#fdcb6e" filter="url(#glow)">
+            <animate attributeName="r" values="15;14;15" dur="1s" repeatCount="indefinite"/>
+        </circle>
+        <text x="20" y="65" fill="white" font-size="14" text-anchor="middle" font-family="Arial">L</text>
+        
+        <!-- 체력 회복 아이템 -->
+        <circle cx="20" cy="100" r="15" fill="#00b894" filter="url(#glow)">
+            <animate attributeName="r" values="15;14;15" dur="1s" repeatCount="indefinite"/>
+        </circle>
+        <text x="20" y="105" fill="white" font-size="14" text-anchor="middle" font-family="Arial">+</text>
+    </g>
+    
+    <!-- 일시정지 버튼 - 세련된 디자인 -->
+    <g transform="translate(740,10)">
+        <rect x="0" y="0" width="40" height="40" rx="10" fill="#2d3436" filter="url(#glow)"/>
+        <text x="20" y="25" text-anchor="middle" fill="white" font-size="20" font-family="Arial">||</text>
+    </g>
+</svg>

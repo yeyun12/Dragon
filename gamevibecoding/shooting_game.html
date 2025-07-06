@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>1:1 슈팅 미니게임</title>
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    #gameCanvas {
+      background: #222;
+      display: block;
+      margin: 30px auto;
+      border: 2px solid #fff;
+      box-shadow: 0 0 20px #000;
+    }
+    #info {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 18px;
+    }
+    #restartBtn {
+      display: none;
+      margin: 20px auto;
+      padding: 10px 30px;
+      font-size: 18px;
+      background: #fff;
+      color: #222;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #restartBtn:hover {
+      background: #eee;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="600" height="500"></canvas>
+  <div id="info">방향키 ← →로 이동, 스페이스바로 발사!<br>먼저 상대의 HP를 0으로 만들면 승리!</div>
+  <button id="restartBtn">다시 시작</button>
+  <script>
+    // 게임 설정
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const info = document.getElementById('info');
+    const restartBtn = document.getElementById('restartBtn');
+
+    const WIDTH = canvas.width;
+    const HEIGHT = canvas.height;
+
+    // 플레이어, 컴퓨터, 총알 설정
+    const PLAYER = {
+      x: WIDTH / 2 - 25,
+      y: HEIGHT - 60,
+      w: 50,
+      h: 20,
+      color: '#4fc3f7',
+      hp: 5,
+      speed: 6,
+      cooldown: 0
+    };
+    const ENEMY = {
+      x: WIDTH / 2 - 25,
+      y: 40,
+      w: 50,
+      h: 20,
+      color: '#e57373',
+      hp: 5,
+      speed: 4,
+      cooldown: 0,
+      dir: 1
+    };
+    const BULLET_SPEED = 8;
+    const ENEMY_BULLET_SPEED = 6;
+    const BULLET_W = 6, BULLET_H = 14;
+    let playerBullets = [];
+    let enemyBullets = [];
+    let keys = {};
+    let gameOver = false;
+    let winner = '';
+
+    // 이벤트 리스너
+    document.addEventListener('keydown', e => {
+      keys[e.code] = true;
+    });
+    document.addEventListener('keyup', e => {
+      keys[e.code] = false;
+    });
+    restartBtn.onclick = () => {
+      location.reload();
+    };
+
+    // 그리기 함수
+    function drawRect(obj) {
+      ctx.fillStyle = obj.color;
+      ctx.fillRect(obj.x, obj.y, obj.w, obj.h);
+    }
+    function drawBullets(bullets, color) {
+      ctx.fillStyle = color;
+      bullets.forEach(b => ctx.fillRect(b.x, b.y, BULLET_W, BULLET_H));
+    }
+    function drawHP() {
+      ctx.font = '18px Segoe UI';
+      ctx.fillStyle = '#fff';
+      ctx.fillText(`유저 HP: ${PLAYER.hp}`, 20, HEIGHT - 10);
+      ctx.fillText(`컴퓨터 HP: ${ENEMY.hp}`, 20, 30);
+    }
+
+    // 충돌 체크
+    function isCollide(a, b) {
+      return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+    }
+
+    // 게임 루프
+    function gameLoop() {
+      ctx.clearRect(0, 0, WIDTH, HEIGHT);
+      // 플레이어 이동
+      if (keys['ArrowLeft']) PLAYER.x -= PLAYER.speed;
+      if (keys['ArrowRight']) PLAYER.x += PLAYER.speed;
+      PLAYER.x = Math.max(0, Math.min(WIDTH - PLAYER.w, PLAYER.x));
+      // 플레이어 발사
+      if (keys['Space'] && PLAYER.cooldown <= 0) {
+        playerBullets.push({ x: PLAYER.x + PLAYER.w/2 - BULLET_W/2, y: PLAYER.y - BULLET_H, vy: -BULLET_SPEED });
+        PLAYER.cooldown = 18;
+      }
+      if (PLAYER.cooldown > 0) PLAYER.cooldown--;
+      // 컴퓨터 이동 (좌우 자동)
+      ENEMY.x += ENEMY.speed * ENEMY.dir;
+      if (ENEMY.x <= 0 || ENEMY.x + ENEMY.w >= WIDTH) ENEMY.dir *= -1;
+      // 컴퓨터 발사 (랜덤+쿨타임)
+      if (ENEMY.cooldown <= 0 && Math.random() < 0.04) {
+        enemyBullets.push({ x: ENEMY.x + ENEMY.w/2 - BULLET_W/2, y: ENEMY.y + ENEMY.h, vy: ENEMY_BULLET_SPEED });
+        ENEMY.cooldown = 30 + Math.random() * 30;
+      }
+      if (ENEMY.cooldown > 0) ENEMY.cooldown--;
+      // 총알 이동
+      playerBullets.forEach(b => b.y += b.vy);
+      enemyBullets.forEach(b => b.y += b.vy);
+      // 총알 화면 밖 제거
+      playerBullets = playerBullets.filter(b => b.y + BULLET_H > 0);
+      enemyBullets = enemyBullets.filter(b => b.y < HEIGHT);
+      // 총알 충돌 체크
+      playerBullets.forEach((b, i) => {
+        if (isCollide({x: b.x, y: b.y, w: BULLET_W, h: BULLET_H}, ENEMY)) {
+          ENEMY.hp--;
+          playerBullets.splice(i, 1);
+        }
+      });
+      enemyBullets.forEach((b, i) => {
+        if (isCollide({x: b.x, y: b.y, w: BULLET_W, h: BULLET_H}, PLAYER)) {
+          PLAYER.hp--;
+          enemyBullets.splice(i, 1);
+        }
+      });
+      // 그리기
+      drawRect(PLAYER);
+      drawRect(ENEMY);
+      drawBullets(playerBullets, '#4fc3f7');
+      drawBullets(enemyBullets, '#e57373');
+      drawHP();
+      // 게임 오버 체크
+      if (PLAYER.hp <= 0 || ENEMY.hp <= 0) {
+        gameOver = true;
+        winner = PLAYER.hp > 0 ? '유저 승리!' : '컴퓨터 승리!';
+        info.innerHTML = `<b>${winner}</b><br>다시 시작하려면 아래 버튼을 누르세요.`;
+        restartBtn.style.display = 'block';
+      }
+      if (!gameOver) requestAnimationFrame(gameLoop);
+    }
+    // 시작
+    gameLoop();
+  </script>
+</body>
+</html> 

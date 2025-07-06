@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+    <!-- 배경 -->
+    <rect x="0" y="0" width="800" height="600" fill="#1a1a1a"/>
+    
+    <!-- 게임 제목 -->
+    <rect x="200" y="100" width="400" height="100" rx="10" fill="#333"/>
+    <text x="400" y="160" text-anchor="middle" fill="white" font-size="40">Dragon Flight</text>
+    
+    <!-- 시작 버튼 -->
+    <rect x="300" y="250" width="200" height="60" rx="30" fill="#4CAF50"/>
+    <text x="400" y="290" text-anchor="middle" fill="white" font-size="24">게임 시작</text>
+    
+    <!-- 튜토리얼 버튼 -->
+    <rect x="300" y="350" width="200" height="60" rx="30" fill="#2196F3"/>
+    <text x="400" y="390" text-anchor="middle" fill="white" font-size="24">튜토리얼</text>
+    
+    <!-- 설정 버튼 -->
+    <rect x="300" y="450" width="200" height="60" rx="30" fill="#607D8B"/>
+    <text x="400" y="490" text-anchor="middle" fill="white" font-size="24">설정</text>
+</svg> 

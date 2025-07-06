@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+    <!-- 배경 (반투명 오버레이) -->
+    <rect x="0" y="0" width="800" height="600" fill="#000000" fill-opacity="0.7"/>
+    
+    <!-- 승리 텍스트 -->
+    <text x="400" y="150" text-anchor="middle" fill="#FFD700" font-size="64" font-weight="bold">VICTORY!</text>
+    
+    <!-- 축하 메시지 -->
+    <text x="400" y="220" text-anchor="middle" fill="white" font-size="24">모든 스테이지를 클리어하셨습니다!</text>
+    
+    <!-- 게임 결과 -->
+    <g transform="translate(300,280)">
+        <!-- 최종 점수 -->
+        <text x="0" y="0" fill="white" font-size="24">최종 점수:</text>
+        <text x="200" y="0" fill="#FFD700" font-size="24">50,000</text>
+        
+        <!-- 클리어 시간 -->
+        <text x="0" y="40" fill="white" font-size="24">총 클리어 시간:</text>
+        <text x="200" y="40" fill="#FFD700" font-size="24">4:30</text>
+        
+        <!-- 사용한 보급품 -->
+        <text x="0" y="80" fill="white" font-size="24">사용한 보급품:</text>
+        <text x="200" y="80" fill="#FFD700" font-size="24">15개</text>
+    </g>
+    
+    <!-- 랭킹 등록 -->
+    <g transform="translate(300,420)">
+        <text x="0" y="0" fill="white" font-size="20">이름 입력:</text>
+        <rect x="0" y="10" width="200" height="40" fill="#333" stroke="#fff"/>
+    </g>
+    
+    <!-- 버튼 영역 -->
+    <g transform="translate(250,500)">
+        <!-- 랭킹 등록 버튼 -->
+        <rect x="0" y="0" width="140" height="50" rx="25" fill="#4CAF50"/>
+        <text x="70" y="32" text-anchor="middle" fill="white" font-size="20">등록</text>
+        
+        <!-- 메인 메뉴 버튼 -->
+        <rect x="160" y="0" width="140" height="50" rx="25" fill="#2196F3"/>
+        <text x="230" y="32" text-anchor="middle" fill="white" font-size="20">메인 메뉴</text>
+    </g>
+</svg> 
