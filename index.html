@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dragon Flight Web Game</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.90.0/dist/phaser.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000;
+        }
+        #game-container {
+            width: 800px;
+            height: 600px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container"></div>
+    <script src="src/entities/Player.js" type="module"></script>
+    <script src="src/entities/Boss.js" type="module"></script>
+    <script src="src/entities/Item.js" type="module"></script>
+    <script src="src/scenes/GameScene.js" type="module"></script>
+    <script src="src/game.js" type="module"></script>
+</body>
+</html> 
